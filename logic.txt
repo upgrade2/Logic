@@ -1,0 +1,73 @@
+content = "<html><meta charset='utf-8'/>" + "<body>";
+		content = content + "<table border='1px'>" + "<tr> " + "<th> Date: </th>" + "<th>" + reportDate
+				+ " </th></tr><tr>" + "<th> Plant: </th>" + "<th>" + bean.getPlantName() + "</th></tr> <tr>"
+				+ "<th> View: </th>" + "<th>" + bean.getViewReportName() + " </th></tr><tr>"
+				+ "<th> Report Selection: </th>" + "<th>" + bean.getReportTypeName() + " </th>"
+				+ "</tr></table><br><br><br>";
+		
+
+		//Fixed Headers
+ 		String staticCol1=header.get(0).getField();
+ 		String staticCol2=header.get(1).getField();
+ 		
+		
+ 		int hsize = Math.floorDiv(header.size(), 8);
+ 		
+ 		content= content+"<table border='1px'><tbody>";
+
+ 		int ptr1 = 0;
+ 		
+ 		for(int i=0; i<hsize; i++)
+ 		{
+				//Fixed Data for rows plantoverlist.
+								String technology2 = plantOverviewList.get(i).getTechnology();
+								String technologyGroup2 = plantOverviewList.get(i).getGroup();
+								System.out.println("  technology name :"+technology2);
+								System.out.println("  technologyGroup2  name "+technologyGroup2);
+												
+			//logic for fixed data headers
+
+ 			content = content + "<tr><td>"+staticCol1+"</td><td>"+staticCol2+"</td>";
+ 		
+			for (int k = 2,j=0; k < header.size(); k++,j++) {
+
+				PlantOverviewColumnDefDTO headers = header.get(k);
+				System.out.println(" Header value is = "+headers.getField());
+ 			if (ptr1>7){
+ 				
+						//table row for data
+ 				content=content+"<tr><td>";
+		
+					int ptr2=0;
+					
+						//fixed row data first two records.
+						while(ptr1-->0)
+					{
+						content =content+technology2+"</td><td>"+technologyGroup2+"</td>";
+						if(ptr2>7)
+									{
+									content=content+"</tr><tr style=\"page-break-after:always\"><td>"+technology2+"</td><td>"+technologyGroup2+"</td>";
+									ptr2=0;	
+									}
+						else{
+							//for(PlantOverviewDTO rowData : data){
+							//content = content + "<td>" + rowData.getUtilizationPercentFormat() + "</td>";
+							content=content+"<td>"+plantOverList.get(j).getUtilizationPercentFormat()+"</td>";
+								}
+							}
+						ptr2++;
+					}
+					content=content+"</tr>";
+
+					
+			}
+				else{
+					content = content + "<td>"+headers.getField() + "</td>";	
+					}
+ 			ptr1++;
+		}
+			
+			content=content+"</tr>";
+	}
+
+content = content + "</tbody></table></body></html>";
